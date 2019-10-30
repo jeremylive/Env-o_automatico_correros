@@ -1,0 +1,217 @@
+<html class="gr__javascripts_astalaweb_com">
+  <head>
+    <title>Formulario de correo</title>
+    <script language="JavaScript">
+      function getCookie(name)
+      {
+        var cname = name + "=";               
+        var dc = document.cookie;             
+        if (dc.length > 0) {              
+          begin = dc.indexOf(cname);       
+        if (begin != -1) {           
+          begin += cname.length;       
+          end = dc.indexOf(";", begin);
+        if (end == -1) end = dc.length;
+          return unescape(dc.substring(begin, end));
+        } 
+      }
+      return null;
+      }
+
+      function setCookie(name, value, expires) 
+      {
+        document.cookie = name + "=" + escape(value) + 
+        ((expires != null) ? "; expires=" + expires.toGMTString() : "")
+        + "; path=/";
+      }
+
+      function setName() 
+      {
+        var expdate = new Date ();
+        expdate.setTime (expdate.getTime() + (24 * 60 * 60 * 1000 * 365));
+        var prompt=i = document.Mail.name.value;
+        setCookie("name", i, expdate);
+      }
+
+      function getName() 
+      {
+        if(getCookie("name") != null) {
+          document.Mail.Name.value = getCookie("emailname");
+        }
+      }
+
+      function getInfo() 
+      {
+        var now= new Date();
+        document.Mail.Info.value += " Navegador: " + navigator.userAgent;
+        document.Mail.Info.value += " ";
+        document.Mail.Info.value += " Fecha de envío: " + now;
+      }
+
+      function checkMultiple() 
+      {
+        if (getCookie("emailsent") == 'true') return true;
+        else return false;
+      }
+
+      function process() 
+      {
+        setCookie("emailsent", "true");
+        with (document.Mail) {
+        if (Subject.selectedIndex == 1) action = "mailto:vjeremylive@live.com?subject=Sugerencias";
+          //else if (Subject.selectedIndex == 2) action = "mailto:vilber72@hotmail.com?subject=Opinión";
+        else if (Subject.selectedIndex == 2) action = "mailto:"+correo.value+"?subject=Opinión";
+        else if (Subject.selectedIndex == 3) action = "mailto:jeremylive@live.com?subject=Informe errores";
+        else if (Subject.selectedIndex == 4) action = "mailto:jeremylive@live.com?subject=Enviar script/código";
+        else if (Subject.selectedIndex == 5) action = "mailto:jeremylive@live.com?subject=Recomendar";
+        else if (Subject.selectedIndex == 6) action = "mailto:jeremylive@live.com?subject=Enlaces rotos";
+        else action = "mailto:jeremylive@live.com?subject=Otros";
+        }
+      }
+
+      function formCheck() 
+      {
+        var passed = false;
+
+        with (document.Mail) {
+          if (Subject.selectedIndex == 0) { 
+            alert("Por favor selecciona asunto.");
+            Subject.focus();
+          }
+          else if (Name.value == "") {
+            alert("Por favor incluye tu nombre.");
+            Name.focus();
+          }
+          else if (correo.value == "") {
+            alert("Por favor incluye el email a quien va dirigido el correo.");
+            correo.value="vilber72@hotmail.com"
+            correo.focus();
+          }
+          else if (checkMultiple == "") {
+            if (confirm("Acabas de mandar un email utilizando este formulario, ¿estás seguro de que quieres mandar otro?")) {
+              process();
+              passed = true;
+            }
+          }
+          else {
+            process();
+            passed = true;
+          }
+        }
+        return passed;
+      }
+    </script>
+  </head>
+    <body data-gr-c-s-loaded="true">
+    <p></p>
+    <center>
+      <font face="Times" size="3">
+        <dd>
+          <b>Formulario de correo</b>
+          <br>
+          "
+          &nbsp;"    
+        </dd>
+      </font>
+    </center>
+    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="1%" id="AutoNumber1" align="left" height="230">
+      <tbody>
+        <tr>
+          <td width="100%" height="230">
+            <font face="Times" size="2">
+            </font>
+            <dd>
+              <font face="Times" size="2">
+              </font>
+              <p align="center">
+                <font face="Times" size="2">Para enviar correo directamente pulsa
+                  <a href="mailto:vilber72@hotmail.com?subject=Correo">aquí</a>.
+                </font>
+                <font face="Times" size="3">
+                </font>
+              </p>
+              <font face="Times" size="3">
+              </font>
+              <center>
+                <font face="Times" size="3">
+                  <form action="mailto:vilber72@hotmail.com?subject=Correo" enctype="text/plain" method="post" name="Mail" onsubmit="return formCheck();">
+                    <input name="Info" size="0" type="hidden" value=" Navegador: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36  Fecha de envío: Wed Oct 30 2019 13:32:23 GMT-0600 (hora estándar central)">
+                    <input name="Formulario" size="0" type="hidden">
+                      <table border="0" cellpadding="5" cellspacing="0" width="678" style="border-collapse: collapse" bordercolor="#111111" height="186">
+                        <tbody>
+                          <tr>
+                            <td width="218" align="center" height="34">
+                              <p align="right">
+                                <font size="2">Nombre:</font> 
+                                <input name="Name" onchange="setName()" size="17" style="font-size: 8pt"> 
+                              </p>
+                            </td>
+                            <td align="center" width="237" height="34">
+                              <p> 
+                                <font size="2">Asunto:</font> 
+                                <select name="Subject" style="font-size: 8pt">
+                                  <option selected="" select="">Selecciona...</option>
+                                  <option>1- Sugerencias</option>
+                                  <option>2. Opinión</option>
+                                  <option>3. Informe errores</option>
+                                  <option>4. Enviar script/código</option>
+                                  <option>5. Recomendar</option>
+                                  <option>6. Enlaces rotos</option>
+                                  <option>7. Otros</option>
+                                </select>
+                              </p>
+                            </td>
+                            <td align="center" width="243" height="34">
+                              <font face="Times" size="2">
+                              </font>
+
+                              <p align="left">
+                                <font face="Times" size="2">Enviar a:
+                                </font>
+                                <font face="Times" size="3">
+                                  <input name="correo" size="23" value="vilber72@hotmail.com" style="font-size: 8pt"> 
+                                </font>
+                              </p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td col span="3" width="708" align="center" height="132">
+                              <p align="left"><font size="2">Notas /código:</font><br>
+                                <font face="Times" size="3">
+                                  <textarea cols="83" name="Cuerpo del mensaje" rows="7">
+                                  </textarea>
+                                </font> 
+                              </p>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    <center>
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td align="middle">
+                              <input type="submit" value="Enviar"> 
+                            </td>
+                          </tr>
+                        </tbody>  
+                      </table>
+                    </center>
+                  </form>
+                  <script language="JavaScript">
+                  getInfo();
+                  getName();
+                  </script>
+                </font>
+              </center>
+            </dd>
+            <!-- Script Size:  4.15 KB  -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <br>
+    </p>
+  </body>
+</html>
